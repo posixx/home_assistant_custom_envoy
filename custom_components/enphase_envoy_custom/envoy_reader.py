@@ -547,6 +547,42 @@ class EnvoyReader:  # pylint: disable=too-many-instance-attributes
                 raise RuntimeError("No match for production, check REGEX  " + text)
         return int(production)
 
+    async def production_l1(self):
+        """Running getData() beforehand will set self.enpoint_type and self.isDataRetrieved"""
+        """so that this method will only read data from stored variables"""
+
+        if self.endpoint_type == ENVOY_MODEL_S:
+            raw_json = self.endpoint_production_json_results.json()
+            idx = 1 if self.isMeteringEnabled else 0
+            production = raw_json["production"][idx]["lines"][0]["wNow"]
+        else:
+            production = 0
+        return int(production)
+
+    async def production_l2(self):
+        """Running getData() beforehand will set self.enpoint_type and self.isDataRetrieved"""
+        """so that this method will only read data from stored variables"""
+
+        if self.endpoint_type == ENVOY_MODEL_S:
+            raw_json = self.endpoint_production_json_results.json()
+            idx = 1 if self.isMeteringEnabled else 0
+            production = raw_json["production"][idx]["lines"][1]["wNow"]
+        else:
+            production = 0
+        return int(production)
+
+    async def production_l3(self):
+        """Running getData() beforehand will set self.enpoint_type and self.isDataRetrieved"""
+        """so that this method will only read data from stored variables"""
+
+        if self.endpoint_type == ENVOY_MODEL_S:
+            raw_json = self.endpoint_production_json_results.json()
+            idx = 1 if self.isMeteringEnabled else 0
+            production = raw_json["production"][idx]["lines"][2]["wNow"]
+        else:
+            production = 0
+        return int(production)
+
     async def consumption(self):
         """Running getData() beforehand will set self.enpoint_type and self.isDataRetrieved"""
         """so that this method will only read data from stored variables"""
@@ -560,6 +596,51 @@ class EnvoyReader:  # pylint: disable=too-many-instance-attributes
 
         raw_json = self.endpoint_production_json_results.json()
         consumption = raw_json["consumption"][0]["wNow"]
+        return int(consumption)
+
+    async def consumption_l1(self):
+        """Running getData() beforehand will set self.enpoint_type and self.isDataRetrieved"""
+        """so that this method will only read data from stored variables"""
+
+        """Only return data if Envoy supports Consumption"""
+        if (
+            self.endpoint_type in ENVOY_MODEL_C
+            or self.endpoint_type in ENVOY_MODEL_LEGACY
+        ):
+            return self.message_consumption_not_available
+
+        raw_json = self.endpoint_production_json_results.json()
+        consumption = raw_json["consumption"][0]["lines"][0]["wNow"]
+        return int(consumption)
+
+    async def consumption_l2(self):
+        """Running getData() beforehand will set self.enpoint_type and self.isDataRetrieved"""
+        """so that this method will only read data from stored variables"""
+
+        """Only return data if Envoy supports Consumption"""
+        if (
+            self.endpoint_type in ENVOY_MODEL_C
+            or self.endpoint_type in ENVOY_MODEL_LEGACY
+        ):
+            return self.message_consumption_not_available
+
+        raw_json = self.endpoint_production_json_results.json()
+        consumption = raw_json["consumption"][0]["lines"][1]["wNow"]
+        return int(consumption)
+
+    async def consumption_l3(self):
+        """Running getData() beforehand will set self.enpoint_type and self.isDataRetrieved"""
+        """so that this method will only read data from stored variables"""
+
+        """Only return data if Envoy supports Consumption"""
+        if (
+            self.endpoint_type in ENVOY_MODEL_C
+            or self.endpoint_type in ENVOY_MODEL_LEGACY
+        ):
+            return self.message_consumption_not_available
+
+        raw_json = self.endpoint_production_json_results.json()
+        consumption = raw_json["consumption"][0]["lines"][2]["wNow"]
         return int(consumption)
 
     async def daily_production(self):
