@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import datetime
-import logging
 from time import strftime, localtime
 
 from homeassistant.components.sensor import SensorEntity
@@ -15,10 +14,6 @@ from homeassistant.helpers.event import async_track_state_change_event
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import BATTERY_ENERGY_DISCHARGED_SENSOR, BATTERY_ENERGY_CHARGED_SENSOR, COORDINATOR, DOMAIN, NAME, SENSORS, PHASE_SENSORS, ICON, CONF_SHOW_PHASE
-
-_LOGGER = logging.getLogger(__name__)
-logging.getLogger("envoy_reader.envoy_reader").setLevel(logging.DEBUG)
-logging.getLogger("custom_components.enphase_envoy").setLevel(logging.DEBUG)
 
 async def async_setup_entry(
     hass: HomeAssistant,
@@ -127,8 +122,7 @@ async def async_setup_entry(
                     coordinator,
                 )
             )
-    _LOGGER.debug("Phase option value: %s", config_entry.options.get[CONF_SHOW_PHASE])
-    if config_entry.options.get(CONF_SHOW_PHASE, False):
+    if config_entry.data.get(CONF_SHOW_PHASE, False):
         for sensor_description in PHASE_SENSORS:
             data = coordinator.data.get(sensor_description.key)
             if isinstance(data, str) and "not available" in data:
