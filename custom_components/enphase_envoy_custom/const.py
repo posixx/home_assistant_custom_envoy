@@ -106,20 +106,6 @@ SENSORS = (
         state_class=SensorStateClass.MEASUREMENT,
         device_class=SensorDeviceClass.ENERGY
     ),
-    SensorEntityDescription(
-        key="grid_import",
-        name="Total Grid Energy Imported",
-        native_unit_of_measurement=ENERGY_WATT_HOUR,
-        state_class=SensorStateClass.TOTAL_INCREASING,
-        device_class=SensorDeviceClass.ENERGY,
-    ),
-    SensorEntityDescription(
-        key="grid_export",
-        name="Total Grid Energy Exported",
-        native_unit_of_measurement=ENERGY_WATT_HOUR,
-        state_class=SensorStateClass.TOTAL_INCREASING,
-        device_class=SensorDeviceClass.ENERGY,
-    ),
 )
 
 PHASE_SENSORS = (
@@ -158,6 +144,23 @@ PHASE_SENSORS = (
         name="Current Power Consumption L3",
         native_unit_of_measurement=POWER_WATT,
         state_class=SensorStateClass.MEASUREMENT,
+    ),
+)
+
+GRID_SENSORS = (
+    SensorEntityDescription(
+        key="grid_import",
+        name="Total Grid Energy Imported",
+        native_unit_of_measurement=ENERGY_WATT_HOUR,
+        state_class=SensorStateClass.TOTAL_INCREASING,
+        device_class=SensorDeviceClass.ENERGY,
+    ),
+    SensorEntityDescription(
+        key="grid_export",
+        name="Total Grid Energy Exported",
+        native_unit_of_measurement=ENERGY_WATT_HOUR,
+        state_class=SensorStateClass.TOTAL_INCREASING,
+        device_class=SensorDeviceClass.ENERGY,
     ),
 )
 

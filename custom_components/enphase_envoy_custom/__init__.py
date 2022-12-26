@@ -15,7 +15,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryAuthFailed
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
-from .const import COORDINATOR, DOMAIN, NAME, PLATFORMS, SENSORS, CONF_USE_ENLIGHTEN, CONF_SERIAL, CONF_SHOW_PHASE
+from .const import COORDINATOR, DOMAIN, NAME, PLATFORMS, SENSORS, CONF_USE_ENLIGHTEN, CONF_SERIAL, CONF_SHOW_PHASE, PHASE_SENSORS, GRID_SENSORS
 
 SCAN_INTERVAL = timedelta(seconds=30)
 
@@ -76,14 +76,12 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             data["grid_status"] = await envoy_reader.grid_status()
 
             if config.get(CONF_SHOW_PHASE, False):
-                data["production_l1"] = await envoy_reader.production_l1()
-                data["production_l2"] = await envoy_reader.production_l2()
-                data["production_l3"] = await envoy_reader.production_l3()
-                data["consumption_l1"] = await envoy_reader.consumption_l1()
-                data["consumption_l2"] = await envoy_reader.consumption_l2()
-                data["consumption_l3"] = await envoy_reader.consumption_l3()
+                for description in PHASE_SENSORS:
+                    data[description.key] = await getattr(
+                        envoy_reader, description.key
+                    )()
 
-            if "lifetime_consumption" in data and "lifetime_production" in data:
+            if "lifetime_consumption" in data and "lifetime_production" in data and "batteries" not in data:
                 LEC_state = hass.states.get( "sensor.envoy_" + config[CONF_SERIAL] + "_lifetime_energy_consumption" )
                 LEP_state = hass.states.get( "sensor.envoy_" + config[CONF_SERIAL] + "_lifetime_energy_production" )
                 TGEI_state = hass.states.get( "sensor.envoy_" + config[CONF_SERIAL] + "_total_grid_energy_imported" )
