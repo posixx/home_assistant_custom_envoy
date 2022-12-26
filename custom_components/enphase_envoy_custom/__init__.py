@@ -75,13 +75,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
             data["grid_status"] = await envoy_reader.grid_status()
 
-            if show_phase:
-                data["production_l1"] = await envoy_reader.production_l1
-                data["production_l2"] = await envoy_reader.production_l2
-                data["production_l3"] = await envoy_reader.production_l3
-                data["consumption_l1"] = await envoy_reader.consumption_l1
-                data["consumption_l2"] = await envoy_reader.consumption_l2
-                data["consumption_l3"] = await envoy_reader.consumption_l3
+            if config.get(CONF_SHOW_PHASE, False):
+                data["production_l1"] = await envoy_reader.production_l1()
+                data["production_l2"] = await envoy_reader.production_l2()
+                data["production_l3"] = await envoy_reader.production_l3()
+                data["consumption_l1"] = await envoy_reader.consumption_l1()
+                data["consumption_l2"] = await envoy_reader.consumption_l2()
+                data["consumption_l3"] = await envoy_reader.consumption_l3()
 
             if "lifetime_consumption" in data and "lifetime_production" in data:
                 LEC_state = hass.states.get( "sensor.envoy_" + config[CONF_SERIAL] + "_lifetime_energy_consumption" )
