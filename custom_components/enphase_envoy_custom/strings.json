@@ -10,7 +10,7 @@
           "password": "[%key:common::config_flow::data::password%]",
           "serial": "envoy serial number",
           "use_enlighten": "Use Enlighten",
-          "show_phase": "Show Individual Phase Power"
+          "show_phase": "3 Phase System"
         }
       }
     },
