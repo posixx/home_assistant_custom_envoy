@@ -127,7 +127,7 @@ async def async_setup_entry(
                     coordinator,
                 )
             )
-    _LOGGER.debug("Phase option value: %s", config_entry[CONF_SHOW_PHASE])
+    _LOGGER.debug("Phase option value: %s", config_entry.options.get[CONF_SHOW_PHASE])
     if config_entry.options.get(CONF_SHOW_PHASE, False):
         for sensor_description in PHASE_SENSORS:
             data = coordinator.data.get(sensor_description.key)
