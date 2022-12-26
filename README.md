@@ -1,4 +1,4 @@
-This is a HACS custom integration for enphase envoys with firmware version 7.X. This integration is based upon the integration of @briancmpbll with the following modifications:
+This is a HACS custom integration for enphase envoys. This integration is based upon the integration of @briancmpbll with the following modifications:
 
 - Data is refreshed every 30 seconds
 - Works for D5 as well as D7 firmware
