@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import datetime
-import logging
 from time import strftime, localtime
 
 from homeassistant.components.sensor import SensorEntity
@@ -16,9 +15,6 @@ from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import BATTERY_ENERGY_DISCHARGED_SENSOR, BATTERY_ENERGY_CHARGED_SENSOR, COORDINATOR, DOMAIN, NAME, SENSORS, PHASE_SENSORS, ICON, CONF_SHOW_PHASE
 
-_LOGGER = logging.getLogger(__name__)
-logging.getLogger("envoy_reader.envoy_reader").setLevel(logging.DEBUG)
-logging.getLogger("custom_components.enphase_envoy").setLevel(logging.DEBUG)
 
 async def async_setup_entry(
     hass: HomeAssistant,
@@ -127,7 +123,6 @@ async def async_setup_entry(
                     coordinator,
                 )
             )
-    _LOGGER.debug("Phase status: %s: %s: %s", CONF_SHOW_PHASE)
     if CONF_SHOW_PHASE:
         for sensor_description in PHASE_SENSORS:
             data = coordinator.data.get(sensor_description.key)

@@ -124,37 +124,37 @@ SENSORS = (
 
 PHASE_SENSORS = (
     SensorEntityDescription(
-        key="production_l1",
+        key="l1_production",
         name="Current Power Production L1",
         native_unit_of_measurement=POWER_WATT,
         state_class=SensorStateClass.MEASUREMENT,
     ),
     SensorEntityDescription(
-        key="production_l2",
+        key="l2_production",
         name="Current Power Production L2",
         native_unit_of_measurement=POWER_WATT,
         state_class=SensorStateClass.MEASUREMENT,
     ),
     SensorEntityDescription(
-        key="production_l3",
+        key="l3_production",
         name="Current Power Production L3",
         native_unit_of_measurement=POWER_WATT,
         state_class=SensorStateClass.MEASUREMENT,
     ),
         SensorEntityDescription(
-        key="consumption_l1",
+        key="l1_consumption",
         name="Current Power Consumption L1",
         native_unit_of_measurement=POWER_WATT,
         state_class=SensorStateClass.MEASUREMENT,
     ),
         SensorEntityDescription(
-        key="consumption_l2",
+        key="l2_consumption",
         name="Current Power Consumption L2",
         native_unit_of_measurement=POWER_WATT,
         state_class=SensorStateClass.MEASUREMENT,
     ),
         SensorEntityDescription(
-        key="consumption_l3",
+        key="l3_consumption",
         name="Current Power Consumption L3",
         native_unit_of_measurement=POWER_WATT,
         state_class=SensorStateClass.MEASUREMENT,
