@@ -26,6 +26,7 @@ LIFE_PRODUCTION_REGEX = (
 SERIAL_REGEX = re.compile(r"Envoy\s*Serial\s*Number:\s*([0-9]+)")
 
 ENDPOINT_URL_PRODUCTION_JSON = "http{}://{}/production.json"
+ENDPOINT_URL_PRODUCTION_JSON_DETAILS = "http{}://{}/production.json?details=1"
 ENDPOINT_URL_PRODUCTION_V1 = "http{}://{}/api/v1/production"
 ENDPOINT_URL_PRODUCTION_INVERTERS = "http{}://{}/api/v1/production/inverters"
 ENDPOINT_URL_PRODUCTION = "http{}://{}/production"
@@ -88,6 +89,7 @@ class EnvoyReader:  # pylint: disable=too-many-instance-attributes
         username="envoy",
         password="",
         inverters=False,
+        show_phase=False,
         async_client=None,
         enlighten_user=None,
         enlighten_pass=None,
@@ -103,6 +105,7 @@ class EnvoyReader:  # pylint: disable=too-many-instance-attributes
         self.username = username
         self.password = password
         self.get_inverters = inverters
+        self.show_phase = show_phase
         self.endpoint_type = None
         self.serial_number_last_six = None
         self.endpoint_production_json_results = None
@@ -145,9 +148,14 @@ class EnvoyReader:  # pylint: disable=too-many-instance-attributes
 
     async def _update_from_pc_endpoint(self):
         """Update from PC endpoint."""
-        await self._update_endpoint(
-            "endpoint_production_json_results", ENDPOINT_URL_PRODUCTION_JSON
-        )
+        if (self.show_phase):
+           await self._update_endpoint(
+            "endpoint_production_json_results", ENDPOINT_URL_PRODUCTION_JSON_DETAILS
+           )
+        else:
+            await self._update_endpoint(
+                "endpoint_production_json_results", ENDPOINT_URL_PRODUCTION_JSON
+            )
         await self._update_endpoint(
             "endpoint_ensemble_json_results", ENDPOINT_URL_ENSEMBLE_INVENTORY
         )

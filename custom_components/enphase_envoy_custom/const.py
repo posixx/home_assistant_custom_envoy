@@ -23,6 +23,7 @@ NAME = "name"
 
 CONF_SERIAL = "serial"
 CONF_USE_ENLIGHTEN = "use_enlighten"
+CONF_SHOW_PHASE = "show_phase"
 
 SENSORS = (
     SensorEntityDescription(
@@ -118,6 +119,45 @@ SENSORS = (
         native_unit_of_measurement=ENERGY_WATT_HOUR,
         state_class=SensorStateClass.TOTAL_INCREASING,
         device_class=SensorDeviceClass.ENERGY,
+    ),
+)
+
+PHASE_SENSORS = (
+    SensorEntityDescription(
+        key="production",
+        name="Current Power Production L1",
+        native_unit_of_measurement=POWER_WATT,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+    SensorEntityDescription(
+        key="production",
+        name="Current Power Production L2",
+        native_unit_of_measurement=POWER_WATT,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+    SensorEntityDescription(
+        key="production",
+        name="Current Power Production L3",
+        native_unit_of_measurement=POWER_WATT,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+        SensorEntityDescription(
+        key="consumption",
+        name="Current Power Consumption L1",
+        native_unit_of_measurement=POWER_WATT,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+        SensorEntityDescription(
+        key="consumption",
+        name="Current Power Consumption L2",
+        native_unit_of_measurement=POWER_WATT,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+        SensorEntityDescription(
+        key="consumption",
+        name="Current Power Consumption L3",
+        native_unit_of_measurement=POWER_WATT,
+        state_class=SensorStateClass.MEASUREMENT,
     ),
 )
 
