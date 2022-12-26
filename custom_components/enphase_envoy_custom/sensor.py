@@ -124,7 +124,7 @@ async def async_setup_entry(
                 )
             )
 
-    if coordinator.data.get(CONF_SHOW_PHASE, False):
+    if CONF_SHOW_PHASE:
         for sensor_description in PHASE_SENSORS:
             data = coordinator.data.get(sensor_description.key)
             if isinstance(data, str) and "not available" in data:
