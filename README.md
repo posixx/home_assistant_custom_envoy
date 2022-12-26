@@ -1,4 +1,9 @@
-This is a HACS custom integration for enphase envoys with firmware version 7.X. This integration is based off work done by @DanBeard, with some changes to report individual battery status.
+This is a HACS custom integration for enphase envoys with firmware version 7.X. This integration is based upon the integration of @briancmpbll with the following modifications:
+
+- Data is refreshed every 30 seconds
+- Works for D5 as well as D7 firmware
+- Option to show phase specific data for 3-phase systems
+- Grid import / export fuctionality made by @gmcmicken added; is only added when no batteries are installed
 
 # Installation
 
@@ -6,5 +11,3 @@ This is a HACS custom integration for enphase envoys with firmware version 7.X. 
 2. Add this repository as a [custom integration repository](https://hacs.xyz/docs/faq/custom_repositories) in HACS
 4. Restart home assistant
 5. Add the integration through the home assistant configuration flow
-
-[<img width="545" alt="bmc-button" src="https://user-images.githubusercontent.com/1570176/180045360-d3f479c5-ad84-4483-b2b0-83820b1a8c63.png">](https://buymeacoffee.com/briancmpblL)
