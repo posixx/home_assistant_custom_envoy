@@ -273,23 +273,6 @@ PHASE_SENSORS = (
     ),
 )
 
-GRID_SENSORS = (
-    SensorEntityDescription(
-        key="grid_import",
-        name="Total Grid Energy Imported",
-        native_unit_of_measurement=ENERGY_WATT_HOUR,
-        state_class=SensorStateClass.TOTAL_INCREASING,
-        device_class=SensorDeviceClass.ENERGY,
-    ),
-    SensorEntityDescription(
-        key="grid_export",
-        name="Total Grid Energy Exported",
-        native_unit_of_measurement=ENERGY_WATT_HOUR,
-        state_class=SensorStateClass.TOTAL_INCREASING,
-        device_class=SensorDeviceClass.ENERGY,
-    ),
-)
-
 BATTERY_ENERGY_DISCHARGED_SENSOR = SensorEntityDescription(
     key="battery_energy_discharged",
     name="Battery Energy Discharged",
