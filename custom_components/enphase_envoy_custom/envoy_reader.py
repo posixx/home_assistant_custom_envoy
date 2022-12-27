@@ -671,6 +671,54 @@ class EnvoyReader:  # pylint: disable=too-many-instance-attributes
                     "No match for Day production, " "check REGEX  " + text
                 )
         return int(daily_production)
+    
+    async def daily_production_l1(self):
+        """Running getData() beforehand will set self.enpoint_type and self.isDataRetrieved"""
+        """so that this method will only read data from stored variables"""
+
+        if self.endpoint_type == ENVOY_MODEL_S and self.isMeteringEnabled:
+            raw_json = self.endpoint_production_json_results.json()
+            idx = 1 if self.isMeteringEnabled else 0
+            daily_production_l1 = raw_json["production"][idx]["lines"][0]["whToday"]
+        elif self.endpoint_type == ENVOY_MODEL_C or (
+            self.endpoint_type == ENVOY_MODEL_S and not self.isMeteringEnabled
+        ):
+            daily_production_l1 = 0
+        elif self.endpoint_type == ENVOY_MODEL_LEGACY:
+            daily_production_l1 = 0
+        return int(daily_production_l1)
+
+    async def daily_production_l2(self):
+        """Running getData() beforehand will set self.enpoint_type and self.isDataRetrieved"""
+        """so that this method will only read data from stored variables"""
+
+        if self.endpoint_type == ENVOY_MODEL_S and self.isMeteringEnabled:
+            raw_json = self.endpoint_production_json_results.json()
+            idx = 1 if self.isMeteringEnabled else 0
+            daily_production_l2 = raw_json["production"][idx]["lines"][1]["whToday"]
+        elif self.endpoint_type == ENVOY_MODEL_C or (
+            self.endpoint_type == ENVOY_MODEL_S and not self.isMeteringEnabled
+        ):
+            daily_production_l2 = 0
+        elif self.endpoint_type == ENVOY_MODEL_LEGACY:
+            daily_production_l2 = 0
+        return int(daily_production_l2)
+
+    async def daily_production_l3(self):
+        """Running getData() beforehand will set self.enpoint_type and self.isDataRetrieved"""
+        """so that this method will only read data from stored variables"""
+
+        if self.endpoint_type == ENVOY_MODEL_S and self.isMeteringEnabled:
+            raw_json = self.endpoint_production_json_results.json()
+            idx = 1 if self.isMeteringEnabled else 0
+            daily_production_l3 = raw_json["production"][idx]["lines"][2]["whToday"]
+        elif self.endpoint_type == ENVOY_MODEL_C or (
+            self.endpoint_type == ENVOY_MODEL_S and not self.isMeteringEnabled
+        ):
+            daily_production_l3 = 0
+        elif self.endpoint_type == ENVOY_MODEL_LEGACY:
+            daily_production_l3 = 0
+        return int(daily_production_l3)
 
     async def daily_consumption(self):
         """Running getData() beforehand will set self.enpoint_type and self.isDataRetrieved"""
@@ -687,13 +735,59 @@ class EnvoyReader:  # pylint: disable=too-many-instance-attributes
         daily_consumption = raw_json["consumption"][0]["whToday"]
         return int(daily_consumption)
 
+    async def daily_consumption_l1(self):
+        """Running getData() beforehand will set self.enpoint_type and self.isDataRetrieved"""
+        """so that this method will only read data from stored variables"""
+
+        """Only return data if Envoy supports Consumption"""
+        if (
+            self.endpoint_type in ENVOY_MODEL_C
+            or self.endpoint_type in ENVOY_MODEL_LEGACY
+        ):
+            return self.message_consumption_not_available
+
+        raw_json = self.endpoint_production_json_results.json()
+        daily_consumption_l1 = raw_json["consumption"][0]["lines"][0]["whToday"]
+        return int(daily_consumption_l1)
+
+    async def daily_consumption_l2(self):
+        """Running getData() beforehand will set self.enpoint_type and self.isDataRetrieved"""
+        """so that this method will only read data from stored variables"""
+
+        """Only return data if Envoy supports Consumption"""
+        if (
+            self.endpoint_type in ENVOY_MODEL_C
+            or self.endpoint_type in ENVOY_MODEL_LEGACY
+        ):
+            return self.message_consumption_not_available
+
+        raw_json = self.endpoint_production_json_results.json()
+        daily_consumption_l2 = raw_json["consumption"][0]["lines"][1]["whToday"]
+        return int(daily_consumption_l2)
+
+    async def daily_consumption_l3(self):
+        """Running getData() beforehand will set self.enpoint_type and self.isDataRetrieved"""
+        """so that this method will only read data from stored variables"""
+
+        """Only return data if Envoy supports Consumption"""
+        if (
+            self.endpoint_type in ENVOY_MODEL_C
+            or self.endpoint_type in ENVOY_MODEL_LEGACY
+        ):
+            return self.message_consumption_not_available
+
+        raw_json = self.endpoint_production_json_results.json()
+        daily_consumption_l3 = raw_json["consumption"][0]["lines"][2]["whToday"]
+        return int(daily_consumption_l3)
+
     async def seven_days_production(self):
         """Running getData() beforehand will set self.enpoint_type and self.isDataRetrieved"""
         """so that this method will only read data from stored variables"""
 
         if self.endpoint_type == ENVOY_MODEL_S and self.isMeteringEnabled:
             raw_json = self.endpoint_production_json_results.json()
-            seven_days_production = raw_json["production"][1]["whLastSevenDays"]
+            idx = 1 if self.isMeteringEnabled else 0
+            seven_days_production = raw_json["production"][idx]["whLastSevenDays"]
         elif self.endpoint_type == ENVOY_MODEL_C or (
             self.endpoint_type == ENVOY_MODEL_S and not self.isMeteringEnabled
         ):
@@ -716,6 +810,54 @@ class EnvoyReader:  # pylint: disable=too-many-instance-attributes
                 )
         return int(seven_days_production)
 
+    async def seven_days_production_l1(self):
+        """Running getData() beforehand will set self.enpoint_type and self.isDataRetrieved"""
+        """so that this method will only read data from stored variables"""
+
+        if self.endpoint_type == ENVOY_MODEL_S and self.isMeteringEnabled:
+            raw_json = self.endpoint_production_json_results.json()
+            idx = 1 if self.isMeteringEnabled else 0
+            seven_days_production_l1 = raw_json["production"][idx]["lines"][0]["whLastSevenDays"]
+        elif self.endpoint_type == ENVOY_MODEL_C or (
+            self.endpoint_type == ENVOY_MODEL_S and not self.isMeteringEnabled
+        ):
+            seven_days_production_l1 = 0
+        elif self.endpoint_type == ENVOY_MODEL_LEGACY:
+            seven_days_production_l1 = 0
+        return int(seven_days_production_l1)
+
+    async def seven_days_production_l2(self):
+        """Running getData() beforehand will set self.enpoint_type and self.isDataRetrieved"""
+        """so that this method will only read data from stored variables"""
+
+        if self.endpoint_type == ENVOY_MODEL_S and self.isMeteringEnabled:
+            raw_json = self.endpoint_production_json_results.json()
+            idx = 1 if self.isMeteringEnabled else 0
+            seven_days_production_l2 = raw_json["production"][idx]["lines"][1]["whLastSevenDays"]
+        elif self.endpoint_type == ENVOY_MODEL_C or (
+            self.endpoint_type == ENVOY_MODEL_S and not self.isMeteringEnabled
+        ):
+            seven_days_production_l2 = 0
+        elif self.endpoint_type == ENVOY_MODEL_LEGACY:
+            seven_days_production_l2 = 0
+        return int(seven_days_production_l2)
+
+    async def seven_days_production_l3(self):
+        """Running getData() beforehand will set self.enpoint_type and self.isDataRetrieved"""
+        """so that this method will only read data from stored variables"""
+
+        if self.endpoint_type == ENVOY_MODEL_S and self.isMeteringEnabled:
+            raw_json = self.endpoint_production_json_results.json()
+            idx = 1 if self.isMeteringEnabled else 0
+            seven_days_production_l3 = raw_json["production"][idx]["lines"][2]["whLastSevenDays"]
+        elif self.endpoint_type == ENVOY_MODEL_C or (
+            self.endpoint_type == ENVOY_MODEL_S and not self.isMeteringEnabled
+        ):
+            seven_days_production_l3 = 0
+        elif self.endpoint_type == ENVOY_MODEL_LEGACY:
+            seven_days_production_l3 = 0
+        return int(seven_days_production_l3)
+
     async def seven_days_consumption(self):
         """Running getData() beforehand will set self.enpoint_type and self.isDataRetrieved"""
         """so that this method will only read data from stored variables"""
@@ -731,13 +873,59 @@ class EnvoyReader:  # pylint: disable=too-many-instance-attributes
         seven_days_consumption = raw_json["consumption"][0]["whLastSevenDays"]
         return int(seven_days_consumption)
 
+    async def seven_days_consumption_l1(self):
+        """Running getData() beforehand will set self.enpoint_type and self.isDataRetrieved"""
+        """so that this method will only read data from stored variables"""
+
+        """Only return data if Envoy supports Consumption"""
+        if (
+            self.endpoint_type in ENVOY_MODEL_C
+            or self.endpoint_type in ENVOY_MODEL_LEGACY
+        ):
+            return self.message_consumption_not_available
+
+        raw_json = self.endpoint_production_json_results.json()
+        seven_days_consumption_l1 = raw_json["consumption"][0]["lines"][0]["whLastSevenDays"]
+        return int(seven_days_consumption_l1)
+
+    async def seven_days_consumption_l2(self):
+        """Running getData() beforehand will set self.enpoint_type and self.isDataRetrieved"""
+        """so that this method will only read data from stored variables"""
+
+        """Only return data if Envoy supports Consumption"""
+        if (
+            self.endpoint_type in ENVOY_MODEL_C
+            or self.endpoint_type in ENVOY_MODEL_LEGACY
+        ):
+            return self.message_consumption_not_available
+
+        raw_json = self.endpoint_production_json_results.json()
+        seven_days_consumption_l2 = raw_json["consumption"][0]["lines"][1]["whLastSevenDays"]
+        return int(seven_days_consumption_l2)
+
+    async def seven_days_consumption_l3(self):
+        """Running getData() beforehand will set self.enpoint_type and self.isDataRetrieved"""
+        """so that this method will only read data from stored variables"""
+
+        """Only return data if Envoy supports Consumption"""
+        if (
+            self.endpoint_type in ENVOY_MODEL_C
+            or self.endpoint_type in ENVOY_MODEL_LEGACY
+        ):
+            return self.message_consumption_not_available
+
+        raw_json = self.endpoint_production_json_results.json()
+        seven_days_consumption_l3 = raw_json["consumption"][0]["lines"][2]["whLastSevenDays"]
+        return int(seven_days_consumption_l3)
+
     async def lifetime_production(self):
         """Running getData() beforehand will set self.enpoint_type and self.isDataRetrieved"""
         """so that this method will only read data from stored variables"""
 
         if self.endpoint_type == ENVOY_MODEL_S and self.isMeteringEnabled:
             raw_json = self.endpoint_production_json_results.json()
-            lifetime_production = raw_json["production"][1]["whLifetime"]
+            idx = 1 if self.isMeteringEnabled else 0
+            lifetime_production = raw_json["production"][idx]["whLifetime"]
         elif self.endpoint_type == ENVOY_MODEL_C or (
             self.endpoint_type == ENVOY_MODEL_S and not self.isMeteringEnabled
         ):
@@ -760,6 +948,54 @@ class EnvoyReader:  # pylint: disable=too-many-instance-attributes
                 )
         return int(lifetime_production)
 
+    async def lifetime_production_l1(self):
+        """Running getData() beforehand will set self.enpoint_type and self.isDataRetrieved"""
+        """so that this method will only read data from stored variables"""
+
+        if self.endpoint_type == ENVOY_MODEL_S and self.isMeteringEnabled:
+            raw_json = self.endpoint_production_json_results.json()
+            idx = 1 if self.isMeteringEnabled else 0
+            lifetime_production_l1 = raw_json["production"][idx]["lines"][0]["whLifetime"]
+        elif self.endpoint_type == ENVOY_MODEL_C or (
+            self.endpoint_type == ENVOY_MODEL_S and not self.isMeteringEnabled
+        ):
+            lifetime_production_l1 = 0
+        elif self.endpoint_type == ENVOY_MODEL_LEGACY:
+            lifetime_production_l1 = 0
+        return int(lifetime_production_l1)
+
+    async def lifetime_production_l2(self):
+        """Running getData() beforehand will set self.enpoint_type and self.isDataRetrieved"""
+        """so that this method will only read data from stored variables"""
+
+        if self.endpoint_type == ENVOY_MODEL_S and self.isMeteringEnabled:
+            raw_json = self.endpoint_production_json_results.json()
+            idx = 1 if self.isMeteringEnabled else 0
+            lifetime_production_l2 = raw_json["production"][idx]["lines"][1]["whLifetime"]
+        elif self.endpoint_type == ENVOY_MODEL_C or (
+            self.endpoint_type == ENVOY_MODEL_S and not self.isMeteringEnabled
+        ):
+            lifetime_production_l2 = 0
+        elif self.endpoint_type == ENVOY_MODEL_LEGACY:
+            lifetime_production_l2 = 0
+        return int(lifetime_production_l2)
+
+    async def lifetime_production_l3(self):
+        """Running getData() beforehand will set self.enpoint_type and self.isDataRetrieved"""
+        """so that this method will only read data from stored variables"""
+
+        if self.endpoint_type == ENVOY_MODEL_S and self.isMeteringEnabled:
+            raw_json = self.endpoint_production_json_results.json()
+            idx = 1 if self.isMeteringEnabled else 0
+            lifetime_production_l3 = raw_json["production"][idx]["lines"][2]["whLifetime"]
+        elif self.endpoint_type == ENVOY_MODEL_C or (
+            self.endpoint_type == ENVOY_MODEL_S and not self.isMeteringEnabled
+        ):
+            lifetime_production_l3 = 0
+        elif self.endpoint_type == ENVOY_MODEL_LEGACY:
+            lifetime_production_l3 = 0
+        return int(lifetime_production_l3)
+
     async def lifetime_consumption(self):
         """Running getData() beforehand will set self.enpoint_type and self.isDataRetrieved"""
         """so that this method will only read data from stored variables"""
@@ -774,6 +1010,51 @@ class EnvoyReader:  # pylint: disable=too-many-instance-attributes
         raw_json = self.endpoint_production_json_results.json()
         lifetime_consumption = raw_json["consumption"][0]["whLifetime"]
         return int(lifetime_consumption)
+
+    async def lifetime_consumption_l1(self):
+        """Running getData() beforehand will set self.enpoint_type and self.isDataRetrieved"""
+        """so that this method will only read data from stored variables"""
+
+        """Only return data if Envoy supports Consumption"""
+        if (
+            self.endpoint_type in ENVOY_MODEL_C
+            or self.endpoint_type in ENVOY_MODEL_LEGACY
+        ):
+            return self.message_consumption_not_available
+
+        raw_json = self.endpoint_production_json_results.json()
+        lifetime_consumption_l1 = raw_json["consumption"][0]["lines"][0]["whLifetime"]
+        return int(lifetime_consumption_l1)
+
+    async def lifetime_consumption_l2(self):
+        """Running getData() beforehand will set self.enpoint_type and self.isDataRetrieved"""
+        """so that this method will only read data from stored variables"""
+
+        """Only return data if Envoy supports Consumption"""
+        if (
+            self.endpoint_type in ENVOY_MODEL_C
+            or self.endpoint_type in ENVOY_MODEL_LEGACY
+        ):
+            return self.message_consumption_not_available
+
+        raw_json = self.endpoint_production_json_results.json()
+        lifetime_consumption_l2 = raw_json["consumption"][0]["lines"][1]["whLifetime"]
+        return int(lifetime_consumption_l2)
+
+    async def lifetime_consumption_l3(self):
+        """Running getData() beforehand will set self.enpoint_type and self.isDataRetrieved"""
+        """so that this method will only read data from stored variables"""
+
+        """Only return data if Envoy supports Consumption"""
+        if (
+            self.endpoint_type in ENVOY_MODEL_C
+            or self.endpoint_type in ENVOY_MODEL_LEGACY
+        ):
+            return self.message_consumption_not_available
+
+        raw_json = self.endpoint_production_json_results.json()
+        lifetime_consumption_l3 = raw_json["consumption"][0]["lines"][2]["whLifetime"]
+        return int(lifetime_consumption_l3)
 
     async def inverters_production(self):
         """Running getData() beforehand will set self.enpoint_type and self.isDataRetrieved"""
