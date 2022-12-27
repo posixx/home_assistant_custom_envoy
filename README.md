@@ -3,7 +3,7 @@ This is a HACS custom integration for enphase envoys. This integration is based 
 - Data is refreshed every 30 seconds
 - Works for D5 as well as D7 firmware
 - Option to show phase specific data for 3-phase systems
-- Grid import / export fuctionality made by @gmcmicken added; is only added when no batteries are installed
+- Grid import / export fuctionality made by @gmcmicken added; is only enabled when no batteries are installed
 
 # Installation
 
