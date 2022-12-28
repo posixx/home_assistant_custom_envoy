@@ -73,7 +73,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
                         envoy_reader, description.key
                     )()
 
-            data["grid_status"] = await envoy_reader.grid_status()
+            grid_status = await envoy_reader.grid_status()
+            if isinstance(grid_status, list):
+                data["grid_status"] = grid_status
 
             if config.get(CONF_SHOW_PHASE, False):
                 for description in PHASE_SENSORS:

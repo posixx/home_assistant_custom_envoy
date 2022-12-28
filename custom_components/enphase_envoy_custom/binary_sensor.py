@@ -16,10 +16,11 @@ async def async_setup_entry(
 
   entities = []
   if (coordinator.data.get("grid_status") is not None):
+    entity_name = f"{name} {GRID_STATUS_BINARY_SENSOR.name}"
     entities.append(
         EnvoyGridStatusEntity(
             GRID_STATUS_BINARY_SENSOR,
-            GRID_STATUS_BINARY_SENSOR.name,
+            entity_name,
             name,
             config_entry.unique_id,
             None,
