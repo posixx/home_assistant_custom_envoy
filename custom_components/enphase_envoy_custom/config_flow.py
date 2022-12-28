@@ -7,6 +7,7 @@ from typing import Any
 
 from .envoy_reader import EnvoyReader
 import httpx
+import ipaddress
 import voluptuous as vol
 
 from homeassistant import config_entries
@@ -48,6 +49,13 @@ async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> EnvoyRead
 
     return envoy_reader
 
+def _is_ipv4(address):
+    try:
+        ip = ipaddress.ip_address(address)
+        return isinstance(ip, ipaddress.IPv4Address)
+    except ValueError:
+        _LOGGER.error("%s is an invalid IP address", address)
+        return False
 
 class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Handle a config flow for Enphase Envoy."""
@@ -92,10 +100,12 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         self, discovery_info: zeroconf.ZeroconfServiceInfo
     ) -> FlowResult:
         """Handle a flow initialized by zeroconf discovery."""
+        self.ip_address = discovery_info.host
+        if not _is_ipv4(self.ip_address):
+            return self.async_abort(reason="ipv6_not_supported")
         serial = discovery_info.properties["serialnum"]
         await self.async_set_unique_id(serial)
-        self.ip_address = discovery_info.host
-        self._abort_if_unique_id_configured({CONF_HOST: self.ip_address})
+        self._abort_if_unique_id_configured()
         for entry in self._async_current_entries(include_ignore=False):
             if (
                 entry.unique_id is None

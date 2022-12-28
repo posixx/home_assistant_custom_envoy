@@ -210,9 +210,10 @@ class EnvoyReader:  # pylint: disable=too-many-instance-attributes
                     if resp.status_code == 404:
                         return None
                     return resp
-            except httpx.TransportError:
+            except httpx.TransportError as e:
+                _LOGGER.debug("TransportError: %s", e)
                 if attempt == 2:
-                    raise
+                    raise e
 
     async def _async_post(self, url, data, cookies=None, **kwargs):
         _LOGGER.debug("HTTP POST Attempt: %s", url)
