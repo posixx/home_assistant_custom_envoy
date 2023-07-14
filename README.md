@@ -1,4 +1,4 @@
-DEPRICATED: Please switch integration to https://github.com/briancmpbll/home_assistant_custom_envoy.git; this is the integration which will be maintained and contains all changes ie 3-Phase suppert etc.
+### **DEPRICATED: Please switch integration to https://github.com/briancmpbll/home_assistant_custom_envoy.git; this is the integration which will be maintained and contains all changes ie 3-Phase suppert etc.**
 
 This is a HACS custom integration for enphase envoys. This integration is based upon the integration of @briancmpbll with the following modifications:
 
